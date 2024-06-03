@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "private": true,
-  "packageManager": "pnpm@8.15.5",
+  "packageManager": "pnpm@9.1.4",
   "scripts": {
     "dev": "waku dev",
     "build": "waku build",
@@ -13,18 +13,18 @@
   "dependencies": {
     "foxact": "^0.2.33",
     "next-themes": "^0.3.0",
-    "react": "18.3.0-canary-56e20051c-20240311",
-    "react-dom": "18.3.0-canary-56e20051c-20240311",
-    "react-server-dom-webpack": "18.3.0-canary-56e20051c-20240311",
-    "waku": "^0.20.0-beta.1"
+    "react": "19.0.0-rc-9d4fba0788-20240530",
+    "react-dom": "19.0.0-rc-9d4fba0788-20240530",
+    "react-server-dom-webpack": "19.0.0-rc-9d4fba0788-20240530",
+    "waku": "^0.21.0-alpha.1"
   },
   "devDependencies": {
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.22",
-    "autoprefixer": "^10.4.18",
-    "postcss": "^8.4.36",
-    "prettier": "^3.2.5",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.4.2"
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "prettier": "^3.3.0",
+    "tailwindcss": "^3.4.3",
+    "typescript": "^5.4.5"
   }
 }
