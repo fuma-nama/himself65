@@ -1,4 +1,7 @@
-export const Banner = () => {
+import { BannerVote } from "./Banner/BannerVote.js";
+import { getTotalVotes } from "../actions/index.js";
+
+export const Banner = async () => {
   return (
     <footer
       role="contentinfo"
@@ -13,6 +16,7 @@ export const Banner = () => {
         >
           Waku
         </a>
+        <BannerVote totalVotes={await getTotalVotes()} />
       </span>
     </footer>
   );
