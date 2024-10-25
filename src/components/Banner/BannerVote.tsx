@@ -1,7 +1,6 @@
 "use client";
 import { startTransition, useOptimistic } from "react";
 import { unvote, vote } from "../../actions/index.js";
-import { useRefetch } from "waku/client";
 
 export function BannerVote(props: { totalVotes: number }) {
   const [optimisticVotes, setOptimisticVotes] = useOptimistic<number, number>(
@@ -11,7 +10,6 @@ export function BannerVote(props: { totalVotes: number }) {
     },
   );
 
-  const refetch = useRefetch();
   return (
     <div className="flex flex-row items-center justify-center gap-1">
       <span>{optimisticVotes}</span>
@@ -20,7 +18,6 @@ export function BannerVote(props: { totalVotes: number }) {
           startTransition(async () => {
             setOptimisticVotes(+1);
             await vote();
-            await refetch("");
           });
         }}
       >
@@ -31,7 +28,6 @@ export function BannerVote(props: { totalVotes: number }) {
           startTransition(async () => {
             setOptimisticVotes(-1);
             await unvote();
-            await refetch("");
           });
         }}
       >

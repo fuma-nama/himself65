@@ -1,35 +1,29 @@
 "use server";
-import postgres from "postgres";
+import { neon } from "@neondatabase/serverless";
+import { unstable_rerenderRoute as rerender } from "waku/router/server";
 
-const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
-
-const conn = postgres({
-  host: PGHOST!,
-  database: PGDATABASE!,
-  username: PGUSER!,
-  password: PGPASSWORD!,
-  port: 5432,
-  ssl: "require",
-});
+const sql = neon(process.env.DATABASE_URL!);
 
 export async function vote() {
-  await conn`
+  await sql`
     UPDATE blogs
     SET upvote_number = upvote_number + 1
     WHERE id = 1
   `;
+  rerender("/");
 }
 
 export async function unvote() {
-  await conn`
+  await sql`
     UPDATE blogs
     SET downvote_number = downvote_number + 1
     WHERE id = 1
   `;
+  rerender("/");
 }
 
 export async function getTotalVotes(): Promise<number> {
-  const result = await conn`
+  const result = await sql`
     SELECT upvote_number, downvote_number
     FROM blogs
     WHERE id = 1
