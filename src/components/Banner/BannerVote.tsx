@@ -1,18 +1,20 @@
 "use client";
-import { startTransition, useOptimistic } from "react";
+import { startTransition, Suspense, use, useOptimistic } from "react";
 import { unvote, vote } from "../../actions/index.js";
 
-export function BannerVote(props: { totalVotes: number }) {
-  const [optimisticVotes, setOptimisticVotes] = useOptimistic<number, number>(
-    props.totalVotes,
-    (current, value) => {
-      return value + current;
-    },
-  );
+export function BannerVote(props: { totalVotes: Promise<number> }) {
+  const [optimisticVotes, setOptimisticVotes] = useOptimistic<
+    Promise<number>,
+    number
+  >(props.totalVotes, async (current, value) => {
+    return value + (await current);
+  });
 
   return (
     <div className="flex flex-row items-center justify-center gap-1">
-      <span>{optimisticVotes}</span>
+      <span>
+        <Suspense fallback="...">{optimisticVotes}</Suspense>
+      </span>
       <button
         onClick={() => {
           startTransition(async () => {

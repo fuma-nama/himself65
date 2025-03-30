@@ -16,7 +16,7 @@ export const Banner = async () => {
         >
           Waku
         </a>
-        <BannerVote totalVotes={await getTotalVotes()} />
+        <BannerVote totalVotes={getTotalVotes()} />
       </span>
     </footer>
   );
