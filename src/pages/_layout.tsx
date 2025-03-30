@@ -11,7 +11,7 @@ export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html>
       <head>
-        <title>LlamaIndex.TS Example</title>
+        <title>Himself65</title>
       </head>
       <body>
         <Layout>
