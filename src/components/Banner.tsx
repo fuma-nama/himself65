@@ -1,6 +1,3 @@
-import { BannerVote } from "./Banner/BannerVote.js";
-import { getTotalVotes } from "../actions/index.js";
-
 export const Banner = async () => {
   return (
     <footer
@@ -11,12 +8,11 @@ export const Banner = async () => {
         Powered by{" "}
         <a
           className="text text-blue-500 hover:underline"
-          href="https://waku.gg/"
+          href="https://github.com/wakujs/waku"
           target="_blank"
         >
           Waku
         </a>
-        <BannerVote totalVotes={getTotalVotes()} />
       </span>
     </footer>
   );
