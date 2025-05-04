@@ -1,7 +1,7 @@
 export const Description = () => {
   return (
     <>
-      <h1 className="text-2xl font-bold sm:text-5xl dark:text-gray-200">
+      <h1 className="text-2xl font-bold sm:text-5xl dark:text-gray-200 pt-5 sm:pt-10">
         Alex Yang
       </h1>
       <div className="flex flex-col items-start w-full flex-1 text-start pt-5 sm:pt-10 px-0 sm:px-10 lg:px-40">
@@ -9,9 +9,9 @@ export const Description = () => {
           A open-source developer, npm library author and maintainer.
         </p>
         <p className="text-sm sm:text-base dark:text-gray-200">
-          Solving problems using Nodejs and React.
+          Solving problems using Node.js and React.
         </p>
-        <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-5 sm:pt-10">
+        <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-2 sm:pt-5">
           work
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
@@ -61,7 +61,7 @@ export const Description = () => {
           </li>
           <li>...</li>
         </ul>
-        <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-5 sm:pt-10">
+        <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-2 sm:pt-5">
           authored libraries
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
@@ -107,7 +107,7 @@ export const Description = () => {
           </li>
           <li>...</li>
         </ul>
-        <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-5 sm:pt-10">
+        <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-2 sm:pt-5">
           honored to be a maintainer of
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
