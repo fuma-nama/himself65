@@ -16,7 +16,7 @@ export const Description = () => {
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
           <li>
-            LlamaIndex, <b className="font-bold">software engineer</b> (nov 2023
+            LlamaIndex, <b className="font-bold">founding software engineer</b> (nov 2023
             - present){" "}
             <a
               className="text-blue-500 hover:underline"
@@ -27,7 +27,7 @@ export const Description = () => {
             </a>
           </li>
           <li>
-            toeverything, <b className="font-bold">frontend tech lead</b> (dec
+            toeverything, <b className="font-bold">architecture leader</b> (dec
             2022 - oct 2023){" "}
             <a
               className="text-blue-500 hover:underline"
@@ -66,7 +66,7 @@ export const Description = () => {
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
           <li>
-            @llama-flow/core{" "}
+            @llamaindex/workflow-core{" "}
             <a
               className="text-blue-500 hover:underline"
               target="_blank"
@@ -81,6 +81,16 @@ export const Description = () => {
               className="text-blue-500 hover:underline"
               target="_blank"
               href="https://github.com/jotaijs/jotai-ai"
+            >
+              ↗
+            </a>
+          </li>
+          <li>
+            jotai-lazy{" "}
+            <a
+              className="text-blue-500 hover:underline"
+              target="_blank"
+              href="https://github.com/jotaijs/jotai-lazy"
             >
               ↗
             </a>
@@ -142,7 +152,7 @@ export const Description = () => {
             </a>
           </li>
           <li>
-            <del>AFFiNE</del>{" "}
+            AFFiNE{" "}
             <a
               className="text-blue-500 hover:underline"
               target="_blank"
@@ -152,7 +162,7 @@ export const Description = () => {
             </a>
           </li>
           <li>
-            <del>blocksuite</del>{" "}
+            blocksuite{" "}
             <a
               className="text-blue-500 hover:underline"
               target="_blank"
@@ -162,7 +172,7 @@ export const Description = () => {
             </a>
           </li>
           <li>
-            <del>Maskbook</del>{" "}
+            Maskbook{" "}
             <a
               className="text-blue-500 hover:underline"
               target="_blank"
