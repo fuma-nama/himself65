@@ -1,12 +1,10 @@
-import "../styles/globals.css";
-
 import { ReactNode } from "react";
-import { ThemeProvider } from "next-themes";
+import { BlogLayout } from "../../components/BlogLayout.js";
 
 type RootLayoutProps = { children: ReactNode; path: string };
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-  return <ThemeProvider attribute="class">{children}</ThemeProvider>;
+  return <BlogLayout>{children}</BlogLayout>;
 }
 
 export const getConfig = async () => {
