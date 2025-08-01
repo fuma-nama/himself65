@@ -1,8 +1,6 @@
 import { source } from "../../source.js";
 import { PageProps } from "waku/router";
 import { Blog } from "../../components/Blog.js";
-import { Button } from "../../components/ui/button.js";
-import { Menu, Search } from "lucide-react";
 import { Link } from "waku";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { ThemeButton } from "../../components/ThemeButton.js";
@@ -49,12 +47,6 @@ export default async function BlogPostPage({
           </div>
           <div className="flex items-center space-x-2">
             <ThemeButton />
-            <Button variant="ghost" size="icon">
-              <Search className="h-4 w-4" />
-            </Button>
-            <Button variant="ghost" size="icon" className="md:hidden">
-              <Menu className="h-4 w-4" />
-            </Button>
           </div>
         </div>
       </header>
@@ -89,7 +81,14 @@ export default async function BlogPostPage({
           </div>
           <div className="text-center text-xs text-gray-400 dark:text-gray-500">
             Powered by{" "}
-            <span className="text-blue-600 dark:text-blue-400">waku</span>
+            <a
+              href="https://waku.gg"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              waku
+            </a>
           </div>
         </div>
       </footer>
