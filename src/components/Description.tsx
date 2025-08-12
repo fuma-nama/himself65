@@ -6,13 +6,11 @@ export const Description = () => {
       </h1>
       <div className="flex flex-col items-start w-full flex-1 text-start pt-5 sm:pt-10 px-0 sm:px-10 lg:px-40">
         <p className="text-sm sm:text-base dark:text-gray-200">
-          A open-source developer, npm library author and maintainer.
-        </p>
-        <p className="text-sm sm:text-base dark:text-gray-200">
-          Solving problems using Node.js and React.
+          An OSS enthusiast and software engineer. Building apps using Node.js
+          and React.
         </p>
         <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-2 sm:pt-5">
-          work
+          experience
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
           <li>
@@ -55,6 +53,17 @@ export const Description = () => {
               className="text-blue-500 hover:underline"
               target="_blank"
               href="http://mask.io/"
+            >
+              ↗
+            </a>
+          </li>
+          <li>
+            Luogu, <b className="font-bold">frontend part-time</b> (may 2018 -
+            nov 2018){" "}
+            <a
+              className="text-blue-500 hover:underline"
+              target="_blank"
+              href="https://www.luogu.com.cn/"
             >
               ↗
             </a>
@@ -115,7 +124,6 @@ export const Description = () => {
               ↗
             </a>
           </li>
-          <li>...</li>
         </ul>
         <h2 className="text-lg font-bold sm:text-xl dark:text-gray-200 pt-2 sm:pt-5">
           honored to be a maintainer of
@@ -136,7 +144,7 @@ export const Description = () => {
             <a
               className="text-blue-500 hover:underline"
               target="_blank"
-              href="https://github.com/dai-shi/waku"
+              href="https://github.com/wakujs/waku"
             >
               ↗
             </a>
@@ -191,7 +199,6 @@ export const Description = () => {
               ↗
             </a>
           </li>
-          <li>...</li>
         </ul>
       </div>
     </>
