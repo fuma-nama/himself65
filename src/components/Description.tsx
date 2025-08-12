@@ -17,7 +17,7 @@ export const Description = () => {
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
           <li>
             LlamaIndex, <b className="font-bold">founding software engineer</b>{" "}
-            (nov 2023 - present){" "}
+            (nov 2023 - aug 2025){" "}
             <a
               className="text-blue-500 hover:underline"
               target="_blank"
