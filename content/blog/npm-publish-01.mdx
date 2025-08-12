@@ -1,0 +1,137 @@
+---
+title: How to make your NPM package work?
+---
+
+I've seen tons of packages on NPM going on the wrong path to solve one problem but causing more problems. So here I will discuss some common issues and how to solve them decently way, if you want to publish a package for all JS runtime(or as much as possible) like Node.js 18/20/22, Deno, Bun, even Vercel edge runtime or Cloudflare worker.
+
+This is a general topic, and there's no absolutely 100% way to make everything work, but I will give my unique experience based on many open-source projects I've worked on.
+
+# Confirm what you want to make for, understand what's the GAP with real runtime
+
+If you are making a UI library like React, the API between Deno or Node.js is not necessary. You would like to choose which bundler you will use and what CSS features you could use. The scratch code would be like:
+
+```tsx
+import './index.css';
+
+export function MyComponent() {
+	return (
+		<div>
+			This is my component
+		</div>
+	)
+}
+```
+
+Then you run some bundler CLI, like `vite build`, `webpack` … then open browser to see the preview. You must know that it is impossible to use non-browser APIs like reading files from a local PC or reading databases directly.
+
+Some Next.js developers might refute this by saying, no, I can use it in the server component. They blur the boundary between the browser and server, making you feel like you are writing code for the browser side, but it's not. Think about it: loading a database directly in the browser is impossible and unsafe. So, there are some tricks that I will talk about later.
+
+Another example is if you are building a new server library (like [Hono](https://hono.dev/), which supports all JS runtime), you might understand you cannot just type `import 'node:fs'` because it's Node.js API. Some JS environments(like Deno, Bun) polyfill them, but before coding, ensure you understand it's not a matter of course and they support it.
+
+In conclusion, here we have three concepts:
+
+1. Host vs Target environment
+
+If you are using Node.js for the browser, you need a hypothesis that Node.js is a parser to transform your code into browser-acceptable code.
+
+If you are using Node.js and only targeting Node.js, ensure there are API-breaking changes between different LTS versions (18, 20, 22…)
+
+But if you want to target any JS runtime like Hono or even support browser. Things might be tricker, you have to know how to publish a correct package to ensure all your users (other developers) will not cause some build/runtime error.
+
+2. JS standard vs Older JS standard
+
+If you want to support IE9, almost everything you wrote won't work like many CSS features, like async function, iterator, ReadableStream…
+
+You will need a bundler that includes polyfill, translate(or downgrade), bundler, and minify features.
+
+Each feature has its own libraries; I list some examples to give you an understanding the differences:
+
+| package | link |
+| --- | --- |
+| polyfill | https://github.com/zloirock/core-js |
+| translate | https://github.com/babel/babel |
+| bundler | https://github.com/evanw/esbuild |
+
+This is inaccurate because some libraries include other and even more features, but just to give you a brief understanding.
+
+Some tools include all-in-one features, like Vite, parcel…
+
+And there's a particular case in TypeScript, which includes polyfill + translate + type check. But most tools only do type checks and make their unique parse logic. Sometimes, TypeScript will have further features before JS like decorator, Symbol. And dispose.
+
+Fortunately, We have [MDN](https://developer.mozilla.org/) and [can use](https://caniuse.com/) it to list JS standards.
+
+3. JS Standard vs Factual standard
+
+Some syntax or APIs do not exist in JS standards, but everyone is using it nowadays.
+
+Like **JSX**, ****which is not a JS standard, you cannot just write it in browser F12, and even you cannot run it in Node.js like `node ./index. js`. Under the hood, there is a parser will translate your code into another version (I recommend reading `dist` output frequently to avoid being misled by feature illusions). Another example is **AsyncLocalStorage**, which seems like a Node.js-only API, but I found that every JS runtime supports it (Deno, Bun, Vercel, Cloudflare…). Why? Because it's much more important than you thought (react SSR or RSC rely on it; otherwise, the context in async function won't work).
+
+However, the difficulty is that there needs to be a document to list which one is *stable* or *experimental* as nowadays everything is experimental, but everyone uses it in JS.
+
+
+# Targeting multiple JS runtime
+
+most JS developers may check some environments in the runtime, then do some lazy load ****if it does not exist. For example, I want to publish a library that has a important sha256 function:
+
+```tsx
+export function sha256(text) {
+	if (!globalThis.cyrpto) {
+		globalThis.crypto = require('node:crypto').webcrypto
+	}
+	// do the sha256 polyfill
+}
+```
+
+This seems correct and works well in most Node.js versions, but there's a pitfall that `require`s it is not a standard function in all non-CJS environments (like Deno, Cloudflare worker, and vertical edge). You might think this will work because of **JS dynamics**.
+
+But no, your code will be blocked by most bundlers like Webpack Vite… and there might be errors when you run the build script.
+
+WHY? Because before you publish your code, your JS code is actually **not dynamic**. All of the bundlers will do static analysis from index.ts to ./some/path/never/called/but/still/there/index.js
+
+1. Tree shake and cut off unused parts to make sure the dist files are clean and short to save your client's memory and disk space.
+2. CJS/ESM Interoperate: in this case, CJS is kind of an actual standard, but ESM is a real JS standard. So if you are trying to import a CJS package in an ESM file, bundlers will try their best to make your code work, avoiding you feeling depressed.
+3. Lazy load and code splitting: this is especially for those those targeting web browsers. First, screen speed is essential in this case, even if you need all code without tree shake, but the order of which loads first is still important.
+
+Backing to the issue on the top, how to make sure my sha256 lib works for all platforms?
+
+### **Conditional exports**
+
+in your package.json, use conditional export fields and write different implementations for each file
+
+```json
+{
+	"name": "my-lib",
+	"type": "module",
+	"exports": {
+		"./utils": {
+			"deno": "./lib/utils.deno.js",
+			"bun": "./lib/utils.bun.js",
+			"edge-light": "./lib/utils.edge-light.js",
+			"workerd": "./lib/utils.workerd.js", // <-- worker is for web worker, workerd is for cloudflare worker
+			"require": "./lib/utils.cjs", // when is used in CJS module
+			"default": "./lib/utils.js" // <-- fallback to node.js default behavior
+		}
+	}
+}
+```
+
+And code them for each target, you might think this is too complicated I have to write them all? Yes, but there's also a bundler called bunchee(https://github.com/huozhi/bunchee) could helps your to generate multiple JS runtimes.
+
+### Should I write file extensions?
+
+you might see this code on top of the file entry
+
+```tsx
+import { sha256 } from './utils'// <-- is this ./utils.js or ./utils.cjs
+// ...
+```
+
+This is actually another factual standard behavior, which Node.js (or bundle) will try to resolve with different file extensions and even look at the ./utils/index file.
+
+It is fine for those who use a bundler; even you can do tricks to support multiple JS runtimes. For example, vercel/ai without file extension and let bundler handle it. And thus you can import ‘ai’ in all runtime.
+
+[ai/packages/ai/tsup.config.ts at main · vercel/ai](https://github.com/vercel/ai/blob/main/packages/ai/tsup.config.ts)
+
+Moreover, you can abstract some runtime-related APIs to different npm packages, like `@mypackage/core` `@mypackage/node` `@mypackage/deno` , and `@mypackage/env`, which env package includes all polyfill-like code like sha256 or similar, and the core package only relies on JS standard.
+
+These are a few suggestions, and there are many things we could discuss, like how to test the different runtimes. How to build CI to cover all the cases and ensure no regression. And I will discuss this in the next post.
