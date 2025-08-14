@@ -5,6 +5,14 @@ import { Link } from "waku";
 import defaultMdxComponents from "fumadocs-ui/mdx";
 import { ThemeButton } from "../../components/ThemeButton.js";
 import { Footer } from "../../components/Footer.js";
+import {
+  H1,
+  H2,
+  H3,
+  H4,
+  H5,
+  H6,
+} from "../../components/mdx/HeadingComponents.js";
 
 export default async function BlogPostPage({
   slug,
@@ -61,7 +69,18 @@ export default async function BlogPostPage({
             {frontmatter.description}
           </p>
           <Blog>
-            <MDX {...defaultMdxComponents} />
+            <MDX
+              {...defaultMdxComponents}
+              components={{
+                ...defaultMdxComponents,
+                h1: H1,
+                h2: H2,
+                h3: H3,
+                h4: H4,
+                h5: H5,
+                h6: H6,
+              }}
+            />
           </Blog>
         </article>
       </main>
