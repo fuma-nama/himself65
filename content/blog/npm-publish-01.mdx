@@ -1,5 +1,7 @@
 ---
 title: How to make your NPM package work?
+createdAt: 2024-04-18
+description: A guide to publishing NPM packages that work across multiple JavaScript runtimes like Node.js, Deno, Bun, and more.
 ---
 
 I've seen tons of packages on NPM going on the wrong path to solve one problem but causing more problems. So here I will discuss some common issues and how to solve them decently way, if you want to publish a package for all JS runtime(or as much as possible) like Node.js 18/20/22, Deno, Bun, even Vercel edge runtime or Cloudflare worker.
@@ -11,14 +13,10 @@ This is a general topic, and there's no absolutely 100% way to make everything w
 If you are making a UI library like React, the API between Deno or Node.js is not necessary. You would like to choose which bundler you will use and what CSS features you could use. The scratch code would be like:
 
 ```tsx
-import './index.css';
+import "./index.css";
 
 export function MyComponent() {
-	return (
-		<div>
-			This is my component
-		</div>
-	)
+  return <div>This is my component</div>;
 }
 ```
 
@@ -46,11 +44,11 @@ You will need a bundler that includes polyfill, translate(or downgrade), bundler
 
 Each feature has its own libraries; I list some examples to give you an understanding the differences:
 
-| package | link |
-| --- | --- |
-| polyfill | https://github.com/zloirock/core-js |
-| translate | https://github.com/babel/babel |
-| bundler | https://github.com/evanw/esbuild |
+| package   | link                                |
+| --------- | ----------------------------------- |
+| polyfill  | https://github.com/zloirock/core-js |
+| translate | https://github.com/babel/babel      |
+| bundler   | https://github.com/evanw/esbuild    |
 
 This is inaccurate because some libraries include other and even more features, but just to give you a brief understanding.
 
@@ -64,21 +62,20 @@ Fortunately, We have [MDN](https://developer.mozilla.org/) and [can use](https:/
 
 Some syntax or APIs do not exist in JS standards, but everyone is using it nowadays.
 
-Like **JSX**, ****which is not a JS standard, you cannot just write it in browser F12, and even you cannot run it in Node.js like `node ./index. js`. Under the hood, there is a parser will translate your code into another version (I recommend reading `dist` output frequently to avoid being misled by feature illusions). Another example is **AsyncLocalStorage**, which seems like a Node.js-only API, but I found that every JS runtime supports it (Deno, Bun, Vercel, Cloudflare…). Why? Because it's much more important than you thought (react SSR or RSC rely on it; otherwise, the context in async function won't work).
+Like **JSX**, \***\*which is not a JS standard, you cannot just write it in browser F12, and even you cannot run it in Node.js like `node ./index. js`. Under the hood, there is a parser will translate your code into another version (I recommend reading `dist` output frequently to avoid being misled by feature illusions). Another example is **AsyncLocalStorage\*\*, which seems like a Node.js-only API, but I found that every JS runtime supports it (Deno, Bun, Vercel, Cloudflare…). Why? Because it's much more important than you thought (react SSR or RSC rely on it; otherwise, the context in async function won't work).
 
-However, the difficulty is that there needs to be a document to list which one is *stable* or *experimental* as nowadays everything is experimental, but everyone uses it in JS.
-
+However, the difficulty is that there needs to be a document to list which one is _stable_ or _experimental_ as nowadays everything is experimental, but everyone uses it in JS.
 
 # Targeting multiple JS runtime
 
-most JS developers may check some environments in the runtime, then do some lazy load ****if it does not exist. For example, I want to publish a library that has a important sha256 function:
+most JS developers may check some environments in the runtime, then do some lazy load \*\*\*\*if it does not exist. For example, I want to publish a library that has a important sha256 function:
 
 ```tsx
 export function sha256(text) {
-	if (!globalThis.cyrpto) {
-		globalThis.crypto = require('node:crypto').webcrypto
-	}
-	// do the sha256 polyfill
+  if (!globalThis.cyrpto) {
+    globalThis.crypto = require("node:crypto").webcrypto;
+  }
+  // do the sha256 polyfill
 }
 ```
 
@@ -100,18 +97,18 @@ in your package.json, use conditional export fields and write different implemen
 
 ```json
 {
-	"name": "my-lib",
-	"type": "module",
-	"exports": {
-		"./utils": {
-			"deno": "./lib/utils.deno.js",
-			"bun": "./lib/utils.bun.js",
-			"edge-light": "./lib/utils.edge-light.js",
-			"workerd": "./lib/utils.workerd.js", // <-- worker is for web worker, workerd is for cloudflare worker
-			"require": "./lib/utils.cjs", // when is used in CJS module
-			"default": "./lib/utils.js" // <-- fallback to node.js default behavior
-		}
-	}
+  "name": "my-lib",
+  "type": "module",
+  "exports": {
+    "./utils": {
+      "deno": "./lib/utils.deno.js",
+      "bun": "./lib/utils.bun.js",
+      "edge-light": "./lib/utils.edge-light.js",
+      "workerd": "./lib/utils.workerd.js", // <-- worker is for web worker, workerd is for cloudflare worker
+      "require": "./lib/utils.cjs", // when is used in CJS module
+      "default": "./lib/utils.js" // <-- fallback to node.js default behavior
+    }
+  }
 }
 ```
 
@@ -122,7 +119,7 @@ And code them for each target, you might think this is too complicated I have to
 you might see this code on top of the file entry
 
 ```tsx
-import { sha256 } from './utils'// <-- is this ./utils.js or ./utils.cjs
+import { sha256 } from "./utils"; // <-- is this ./utils.js or ./utils.cjs
 // ...
 ```
 

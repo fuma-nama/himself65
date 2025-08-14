@@ -1,9 +1,6 @@
 export const Description = () => {
   return (
     <>
-      <h1 className="text-2xl font-bold sm:text-5xl dark:text-gray-200 pt-5 sm:pt-10">
-        Alex Yang
-      </h1>
       <div className="flex flex-col items-start w-full flex-1 text-start pt-5 sm:pt-10 px-0 sm:px-10 lg:px-40">
         <p className="text-sm sm:text-base dark:text-gray-200">
           An OSS enthusiast and software engineer. Building apps using Node.js
