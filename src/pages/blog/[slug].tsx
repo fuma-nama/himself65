@@ -41,6 +41,12 @@ export default async function BlogPostPage({
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
       <meta property="og:image" content={ogUrl.toString()} />
+      <meta property="og:title" content={frontmatter.title} />
+      <meta property="og:description" content={frontmatter.description} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={frontmatter.title} />
+      <meta name="twitter:description" content={frontmatter.description} />
+      <meta name="twitter:image" content={ogUrl.toString()} />
       <header
         className="border-b border-gray-200 dark:border-gray-800"
         aria-label="Header"
