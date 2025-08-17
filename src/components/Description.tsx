@@ -11,6 +11,17 @@ export const Description = () => {
         </h2>
         <ul className="list-disc list-inside text-sm sm:text-base dark:text-gray-200">
           <li>
+            Better Auth, <b className="font-bold">founding software engineer</b>{" "}
+            (aug 2025 - now){" "}
+            <a
+              className="text-blue-500 hover:underline"
+              target="_blank"
+              href="https://www.better-auth.com/"
+            >
+              ↗
+            </a>
+          </li>
+          <li>
             LlamaIndex, <b className="font-bold">founding software engineer</b>{" "}
             (nov 2023 - aug 2025){" "}
             <a
