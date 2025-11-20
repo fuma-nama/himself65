@@ -33,7 +33,7 @@ export default async function BlogPostPage({
   const frontmatter = page.data;
   const MDX = page.data.default;
 
-  const prodUrl = getEnv("VERCEL_URL");
+  const prodUrl = getEnv("VERCEL_PROJECT_PRODUCTION_URL");
   const ogUrl = new URL(
     `/api/og?slug=${slug}`,
     prodUrl ? "https://" + prodUrl : "http://localhost:3000",
