@@ -25,6 +25,7 @@ export function generate({
         padding: "4rem",
         backgroundColor: "#0c0c0c",
         backgroundImage: `linear-gradient(to top right, ${primaryColor}, transparent)`,
+        fontFamily: "Roboto, Noto Sans SC, sans-serif",
       }}
     >
       <div
@@ -41,7 +42,7 @@ export function generate({
         <p
           style={{
             fontSize: "56px",
-            fontWeight: 600,
+            fontWeight: 300,
           }}
         >
           {props.site}
@@ -50,7 +51,7 @@ export function generate({
 
       <p
         style={{
-          fontWeight: 800,
+          fontWeight: 300,
           fontSize: "82px",
         }}
       >
@@ -59,6 +60,7 @@ export function generate({
       <p
         style={{
           fontSize: "52px",
+          fontWeight: 300,
           color: "rgba(240,240,240,0.8)",
         }}
       >

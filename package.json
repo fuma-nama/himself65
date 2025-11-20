@@ -11,6 +11,7 @@
     "lint": "prettier -c ."
   },
   "dependencies": {
+    "@fontsource-variable/noto-sans-sc": "^5.2.9",
     "@hookform/resolvers": "^5.2.1",
     "@neondatabase/serverless": "^1.0.1",
     "@radix-ui/react-accordion": "^1.2.11",

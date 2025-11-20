@@ -4,7 +4,10 @@ import satori from "satori";
 import { parse } from "opentype.js";
 // @ts-expect-error
 import ttf from "../../fonts/roboto-v30-latin-300.ttf?raw-hex";
+// @ts-expect-error
+import notoSansSCOtf from "../../fonts/NotoSansSC-Light.otf?raw-hex";
 const { buffer } = Buffer.from(ttf, "hex");
+const { buffer: notoSansSCBuffer } = Buffer.from(notoSansSCOtf, "hex");
 
 export async function GET(request: Request) {
   const url = request.url;
@@ -28,6 +31,12 @@ export async function GET(request: Request) {
           {
             name: "Roboto",
             data: parse(buffer).toArrayBuffer(),
+            weight: 300,
+            style: "normal",
+          },
+          {
+            name: "Noto Sans SC",
+            data: notoSansSCBuffer,
             weight: 300,
             style: "normal",
           },
