@@ -1,11 +1,11 @@
-import { generate } from "../../components/OG.js";
-import { source } from "../../source.js";
+import { generate } from "../../../components/OG.js";
+import { source } from "../../../source.js";
 import satori from "satori";
 import { parse } from "opentype.js";
 // @ts-expect-error
-import ttf from "../../fonts/roboto-v30-latin-300.ttf?raw-hex";
+import ttf from "../../../fonts/roboto-v30-latin-300.ttf?raw-hex";
 // @ts-expect-error
-import notoSansSCOtf from "../../fonts/NotoSansSC-Light.otf?raw-hex";
+import notoSansSCOtf from "../../../fonts/NotoSansSC-Light.otf?raw-hex";
 const { buffer } = Buffer.from(ttf, "hex");
 const { buffer: notoSansSCBuffer } = Buffer.from(notoSansSCOtf, "hex");
 

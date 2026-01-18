@@ -1,7 +1,7 @@
 import { loader } from "fumadocs-core/source";
-import { create, docs } from "../source.generated.js";
+import { docs } from "../.source/server.js";
 
 export const source = loader({
-  source: await create.sourceAsync(docs.doc, docs.meta),
+  source: docs.toFumadocsSource(),
   baseUrl: "/blog",
 });

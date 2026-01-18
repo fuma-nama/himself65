@@ -1,10 +1,10 @@
 import { source } from "../../source.js";
 import { PageProps } from "waku/router";
-import { Blog } from "../../components/Blog.js";
 import { Link, getEnv } from "waku";
-import defaultMdxComponents from "fumadocs-ui/mdx";
 import { ThemeButton } from "../../components/ThemeButton.js";
 import { Footer } from "../../components/Footer.js";
+import { Blog } from "../../components/Blog.js";
+import defaultMdxComponents from "fumadocs-ui/mdx";
 import {
   H1,
   H2,
@@ -31,7 +31,7 @@ export default async function BlogPostPage({
   }
 
   const frontmatter = page.data;
-  const MDX = page.data.default;
+  const MDX = (page.data as any).body;
 
   const prodUrl = getEnv("VERCEL_PROJECT_PRODUCTION_URL");
   const ogUrl = new URL(
