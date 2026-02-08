@@ -3,6 +3,7 @@ import mdx from "fumadocs-mdx/vite";
 import * as MdxConfig from "./source.config.js";
 import { Plugin } from "vite";
 import { readFile } from "node:fs/promises";
+import tailwind from"@tailwindcss/vite"
 
 const hexLoader: Plugin = {
   name: "hex-loader",
@@ -19,6 +20,6 @@ const hexLoader: Plugin = {
 
 export default defineConfig({
   vite: {
-    plugins: [mdx(MdxConfig), hexLoader],
+    plugins: [mdx(MdxConfig), hexLoader, tailwind()],
   },
 });
